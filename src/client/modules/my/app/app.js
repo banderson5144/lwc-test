@@ -1,16 +1,22 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 const columns = [
-    { label: 'Label', fieldName: 'name',hideDefaultActions: true },
-    { label: 'Website', fieldName: 'website', type: 'url',hideDefaultActions: true },
-    { label: 'Phone', fieldName: 'phone', type: 'phone',hideDefaultActions: true },
-    { label: 'Balance', fieldName: 'amount', type: 'currency',hideDefaultActions: true },
-    { label: 'CloseAt', fieldName: 'closeAt', type: 'date',hideDefaultActions: true },
+    { label: 'SF Object', fieldName: 'sfObj' },
+    { label: 'OB Object', fieldName: 'obObj' },
+    { label: 'Delta', fieldName: 'delta', cellAttributes: {
+        class: {
+            fieldName: 'cellCss'
+        }
+    }}
 ];
 
 export default class App extends LightningElement
 {
-    data = [
+    testBool = true;
+    someData = 'barry';
+    tblData = [];
+
+    /*tblData = [
         {
             "name": "Malinda Schmidt",
             "email": "Rogers.Rodriguez40@yahoo.com",
@@ -47,6 +53,14 @@ export default class App extends LightningElement
             "closeAt": "2021-12-24T08:01:14.904Z",
             "id": "68893cbb-d488-48bb-a66d-cdbac563c2fd"
         }
-    ];
+    ];*/
     columns = columns;
+
+    handleClick() {
+        this.testBool = false;
+        console.log(this.someData);
+        fetch('/mytest')
+        .then(response => response.json())
+        .then(data => {this.tblData = data});
+    }
 }

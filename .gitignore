@@ -16,6 +16,9 @@ node_modules
 # Temp directory
 /tmp
 
+#Temp env vars
+.env
+
 # Jest coverage folder
 /coverage
 
