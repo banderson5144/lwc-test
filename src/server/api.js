@@ -1,5 +1,6 @@
 // Simple Express server setup to serve for local testing/dev API server
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 const compression = require('compression');
 const helmet = require('helmet');
 const express = require('express');
