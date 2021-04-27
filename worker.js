@@ -1,5 +1,6 @@
 let throng = require('throng');
 let Queue = require("bull");
+let myThing = require('./utils/async');
 
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 let REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
@@ -25,22 +26,24 @@ function start() {
   workQueue.process(maxJobsPerWorker, async (job) => {
     // This is an example job that just slowly reports on progress
     // while doing no work. Replace this with your own job logic.
-    let progress = 0;
+    // let progress = 0;
 
-    // throw an error 5% of the time
-    if (Math.random() < 0.05) {
-      throw new Error("This job failed!")
-    }
+    // // throw an error 5% of the time
+    // if (Math.random() < 0.05) {
+    //   throw new Error("This job failed!")
+    // }
 
-    while (progress < 100) {
-      await sleep(50);
-      progress += 1;
-      //job.progress(progress)
-    }
+    // while (progress < 100) {
+    //   await sleep(50);
+    //   progress += 1;
+    //   //job.progress(progress)
+    // }
+
+    let myVal = await myThing.start();
 
     // A job can return values that will be stored in Redis as JSON
     // This return value is unused in this demo application.
-    return { value: "This will be stored" };
+    return myVal;
   });
 }
 
