@@ -11,18 +11,6 @@ const obApi = require('../utils/obApi');
 const theTest = require('../utils/async');
 
 const app = express();
-const wss = new Server({ app });
-
-wss.on('connection', (ws) => {
-    console.log('Client connected');
-    ws.on('close', () => console.log('Client disconnected'));
-});
-
-setInterval(() => {
-    wss.clients.forEach((client) => {
-        client.send(new Date().toTimeString());
-    });
-}, 1000);
 
 app.use(helmet());
 app.use(compression());
@@ -62,3 +50,16 @@ app.get('/mytest', async (req, res) => {
 app.listen(PORT, () =>
     console.log(`✅  Server started: http://${HOST}:${PORT}`)
 );
+
+const wss = new Server({ app });
+
+wss.on('connection', (ws) => {
+    console.log('Client connected');
+    ws.on('close', () => console.log('Client disconnected'));
+});
+
+setInterval(() => {
+    wss.clients.forEach((client) => {
+        client.send(new Date().toTimeString());
+    });
+}, 1000);
