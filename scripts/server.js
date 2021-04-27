@@ -51,23 +51,26 @@ const app = express()
     console.log(`✅  Server started: http://${HOST}:${PORT}`)
 );
 
+const wss = new Server({ server: app });
+
 // You can listen to global events to get notified when jobs are processed
 workQueue.on('global:completed', (jobId, result) => {
     console.log(`Job completed with result ${result}`);
+    wss.clients.forEach((client) => {
+        client.send(result);
+    });
 });
-
-const wss = new Server({ server: app });
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
     ws.on('close', () => console.log('Client disconnected'));
 });
 
-setInterval(() => {
-    wss.clients.forEach((client) => {
-        client.send(new Date().toTimeString());
-    });
-}, 5000);
+// setInterval(() => {
+//     wss.clients.forEach((client) => {
+//         client.send(new Date().toTimeString());
+//     });
+// }, 5000);
 
 function doThis()
 {
