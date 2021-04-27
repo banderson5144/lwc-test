@@ -55,7 +55,7 @@ const wss = new Server({ server: app });
 
 // You can listen to global events to get notified when jobs are processed
 workQueue.on('global:completed', (jobId, result) => {
-    console.log(`Job completed with result ${result}`);
+    // console.log(`Job completed with result ${result}`);
     wss.clients.forEach((client) => {
         // console.log(typeof(result));
         // console.log(result);
