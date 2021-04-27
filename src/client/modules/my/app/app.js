@@ -63,4 +63,12 @@ export default class App extends LightningElement
         .then(response => response.json())
         .then(data => {this.tblData = data});
     }
+
+    handleClickBar() {
+        this.testBool = false;
+        console.log(this.someData);
+        fetch('/mytest')
+        .then(response => response.json())
+        .then(data => {this.someData = data});
+    }
 }

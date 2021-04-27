@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 const { Server } = require('ws');
 
+let Queue = require('bull');
 const compression = require('compression');
 const helmet = require('helmet');
 const express = require('express');
@@ -12,7 +13,10 @@ const theTest = require('../utils/async');
 
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3001;
+const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
 const DIST_DIR = './dist';
+
+let workQueue = new Queue('work', REDIS_URL);
 
 const app = express()
 .use(helmet())
@@ -22,7 +26,7 @@ const app = express()
     res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 })
 .get('/myapi', (req, res) => {
-    return res.send('Received a GET HTTP method');
+    res.send('Received a GET HTTP method');
 })
 .get('/obTest', async (req, res) => {
     await obApi.loginOb();
@@ -31,22 +35,26 @@ const app = express()
 
     res.contentType('text/plain');
 
-    return res.send(stuff);
+    res.send(stuff);
 })
 .get('/mytest', async (req, res) => {
     // const stuff = await theTest.start();
 
     // res.contentType('application/json');
 
-    doThis();
+    // doThis();
 
-    res.contentType('text/plain');
-
-    return res.send('processing');
+    let job = await workQueue.add();
+    res.json({ id: job.id });
 })
 .listen(PORT, () =>
     console.log(`✅  Server started: http://${HOST}:${PORT}`)
 );
+
+// You can listen to global events to get notified when jobs are processed
+workQueue.on('global:completed', (jobId, result) => {
+    console.log(`Job completed with result ${result}`);
+});
 
 const wss = new Server({ server: app });
 
