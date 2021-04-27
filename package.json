@@ -23,11 +23,6 @@
         "lwc-services": "^3.0.4",
         "prettier": "^2.2.1"
     },
-    "engines": {
-        "node": ">=10.13.0",
-        "npm": ">=6.4.1",
-        "yarn": ">=1.9.4"
-    },
     "homepage": "https://github.com/lwcApp",
     "husky": {
         "hooks": {
