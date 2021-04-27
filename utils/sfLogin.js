@@ -2,7 +2,7 @@ var jwt = require('salesforce-jwt-bearer-token-flow');
 //let privateKey = require('fs').readFileSync('./src/server/keys/server.key', 'utf8');
 let privateKey = process.env.SF_JWT;
 
-console.log(privateKey);
+// console.log(privateKey);
 
 function loginToSf()
 {
