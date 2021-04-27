@@ -1,6 +1,8 @@
 // Simple Express server setup to serve the build output
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
+const { Server } = require('ws');
+
 const compression = require('compression');
 const helmet = require('helmet');
 const express = require('express');
@@ -9,6 +11,19 @@ const obApi = require('../utils/obApi');
 const theTest = require('../utils/async');
 
 const app = express();
+const wss = new Server({ app });
+
+wss.on('connection', (ws) => {
+    console.log('Client connected');
+    ws.on('close', () => console.log('Client disconnected'));
+});
+
+setInterval(() => {
+    wss.clients.forEach((client) => {
+        client.send(new Date().toTimeString());
+    });
+}, 1000);
+
 app.use(helmet());
 app.use(compression());
 
