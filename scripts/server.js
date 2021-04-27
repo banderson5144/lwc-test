@@ -57,6 +57,8 @@ const wss = new Server({ server: app });
 workQueue.on('global:completed', (jobId, result) => {
     console.log(`Job completed with result ${result}`);
     wss.clients.forEach((client) => {
+        console.log(typeof(result));
+        console.log(result);
         client.send(result);
     });
 });

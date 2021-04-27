@@ -69,6 +69,6 @@ export default class App extends LightningElement
         console.log(this.someData);
         fetch('/mytest')
         .then(response => response.json())
-        .then(data => {console.log(data);this.someData = data;});
+        .then(data => {console.log(typeof(data));console.log(data);this.someData = data;});
     }
 }
