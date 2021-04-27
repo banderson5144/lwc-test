@@ -64,6 +64,7 @@ export default class App extends LightningElement
             console.log(typeof(event));
             console.log(event);
             console.log(event.data);
+            this.someData = event.data;
         };
     }
 
