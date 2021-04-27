@@ -34,11 +34,15 @@ const app = express()
     return res.send(stuff);
 })
 .get('/mytest', async (req, res) => {
-    const stuff = await theTest.start();
+    // const stuff = await theTest.start();
 
-    res.contentType('application/json');
+    // res.contentType('application/json');
 
-    return res.send(stuff);
+    doThis();
+
+    res.contentType('text/plain');
+
+    return res.send('processing');
 })
 .listen(PORT, () =>
     console.log(`✅  Server started: http://${HOST}:${PORT}`)
@@ -56,3 +60,13 @@ setInterval(() => {
         client.send(new Date().toTimeString());
     });
 }, 5000);
+
+function doThis()
+{
+    theTest.start()
+    .then(val => {
+        wss.clients.forEach((client) => {
+            client.send(val);
+        });
+    });
+}
