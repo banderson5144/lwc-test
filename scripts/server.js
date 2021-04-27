@@ -47,11 +47,11 @@ app.get('/mytest', async (req, res) => {
     return res.send(stuff);
 });
 
-app.listen(PORT, () =>
+const finalServer = app.listen(PORT, () =>
     console.log(`✅  Server started: http://${HOST}:${PORT}`)
 );
 
-const wss = new Server({ app });
+const wss = new Server({ finalServer });
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
