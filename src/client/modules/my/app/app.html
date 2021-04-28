@@ -3,7 +3,8 @@
     <lightning-datatable
             key-field="id"
             data={tblData}
-            columns={columns}>
+            columns={columns}
+            is-loading="true">
     </lightning-datatable>
 
 
@@ -13,7 +14,7 @@
         title="Click Me"
         onclick={handleClick}></lightning-button> -->
 
-    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    <!-- <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner> -->
         
     <lightning-button
         variant="brand"
