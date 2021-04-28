@@ -57,15 +57,15 @@ export default class App extends LightningElement
     columns = columns;
 
     connectedCallback() {
-        // var HOST = location.origin.replace(/^http/, 'ws')
-        // var ws = new WebSocket(HOST);
+        var HOST = location.origin.replace(/^http/, 'ws')
+        var ws = new WebSocket(HOST);
 
-        // ws.onmessage = (event) => {
-        //     // console.log(typeof(event));
-        //     // console.log(event);
-        //     // console.log(event.data);
-        //     this.tblData = JSON.parse(event.data);
-        // };
+        ws.onmessage = (event) => {
+            // console.log(typeof(event));
+            // console.log(event);
+            // console.log(event.data);
+            this.tblData = JSON.parse(event.data);
+        };
     }
 
     handleClick() {

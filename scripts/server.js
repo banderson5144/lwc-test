@@ -65,6 +65,7 @@ workQueue.on('global:completed', (jobId, result) => {
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
+    ws.on('pong', () => console.log('it ponged'));
 });
 
 function noop() {}
