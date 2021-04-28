@@ -15,6 +15,7 @@ export default class App extends LightningElement
     testBool = true;
     someData = 'barry';
     tblData = [];
+    isLoading = false;
 
     /*tblData = [
         {
@@ -65,6 +66,7 @@ export default class App extends LightningElement
             // console.log(event);
             // console.log(event.data);
             this.tblData = JSON.parse(event.data);
+            this.isLoading = false;
         };
     }
 
@@ -79,6 +81,7 @@ export default class App extends LightningElement
     handleClickBar() {
         this.testBool = false;
         console.log(this.someData);
+        this.isLoading = true;
         fetch('/mytest')
         .then(response => response.json())
         .then(data => {

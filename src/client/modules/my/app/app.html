@@ -1,25 +1,11 @@
 <template>
 
-    <!-- <lightning-datatable
+    <lightning-datatable
             key-field="id"
             data={tblData}
             columns={columns}
-            is-loading="true">
-    </lightning-datatable> -->
-
-    <div class="cases-data-table" style="height: 500px;">
-        <lightning-datatable
-                key-field="id"
-                data={tblData}
-                columns={columns}>
-        </lightning-datatable>
-        <div class="slds-spinner_inline spinner-padding">
-            <lightning-spinner variant="brand" 
-                               alternative-text="Loading Cases"     
-                               size="medium">
-            </lightning-spinner>
-        </div>
-    </div>
+            is-loading={isLoading}>
+    </lightning-datatable>
 
 
     <!-- <lightning-button
@@ -32,8 +18,8 @@
         
     <lightning-button
         variant="brand"
-        label="Click Me Bar"
-        title="Click Me Bar"
+        label="Load Table"
+        title="Load Table"
         onclick={handleClickBar}></lightning-button>
 
     <!-- <template if:true={testBool}>
