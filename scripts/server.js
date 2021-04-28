@@ -65,7 +65,22 @@ workQueue.on('global:completed', (jobId, result) => {
 
 wss.on('connection', (ws) => {
     console.log('Client connected');
-    ws.on('close', () => console.log('Client disconnected'));
+});
+
+function noop() {}
+
+const interval = setInterval(function ping() {
+    wss.clients.forEach(function each(ws) {
+      if (ws.isAlive === false) return ws.terminate();
+  
+      ws.isAlive = false;
+      ws.ping(noop);
+    });
+  }, 5000);
+
+wss.on('close', () => {
+    console.log('Client disconnected');
+    clearInterval(interval);
 });
 
 // setInterval(() => {
