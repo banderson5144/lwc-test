@@ -71,12 +71,10 @@ function noop() {}
 
 const interval = setInterval(function ping() {
     wss.clients.forEach(function each(ws) {
-      if (ws.isAlive === false) return ws.terminate();
-  
-      ws.isAlive = false;
-      ws.ping(noop);
+        console.log('pinging');
+        ws.ping(noop);
     });
-  }, 5000);
+}, 5000);
 
 wss.on('close', () => {
     console.log('Client disconnected');
