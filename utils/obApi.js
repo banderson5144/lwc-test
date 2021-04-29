@@ -4,7 +4,7 @@ var obSessionId = '';
 
 function loginOb()
 {
-    const xFormBody = `${encodeURIComponent('email')}=${encodeURIComponent('bryana@ownbackup.com')}&${encodeURIComponent('password')}=${encodeURIComponent('!Th1s1sas3cr3t!')}`;
+    const xFormBody = `${encodeURIComponent('email')}=${encodeURIComponent(process.env.OB_USERNAME)}&${encodeURIComponent('password')}=${encodeURIComponent(process.env.OB_PASSWORD)}`;
 
     var options = {
         host: 'app1.ownbackup.com',
