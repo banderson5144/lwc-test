@@ -9,6 +9,9 @@ var compare = [];
 
 var conn;
 
+var allQueryableObjs = [];
+var allQueryCallback = [];
+
 async function start()
 {
     console.log('Logging into SF');
@@ -31,19 +34,34 @@ async function start()
     {
         if(sObj.queryable)
         {
-            let queryRes = '';
+            //let queryRes = '';
 
-            try
-            {
-                queryRes = await conn.query('Select Id From '+sObj.name);
-            }catch(e)
-            {
-                //console.log(e);
-            }
+            allQueryableObjs.push(sObj.name);
+            allQueryCallback.push(conn.query('Select Id From '+sObj.name));
 
-            const recCount = queryRes.totalSize;
+            // try
+            // {
+            //     queryRes = await conn.query('Select Id From '+sObj.name);
+            // }catch(e)
+            // {
+            //     //console.log(e);
+            // }
 
-            sfObjCountMap[sObj.name] = recCount;
+            // const recCount = queryRes.totalSize;
+
+            // sfObjCountMap[sObj.name] = recCount;
+        }
+    }
+
+    let qryRes = await Promise.allSettled(allQueryCallback);
+
+    for(let i=0; i<qryRes.length; i++)
+    {
+        let currRes = qryRes[i];
+
+        if(currRes.status == "fulfilled")
+        {
+            sfObjCountMap[allQueryableObjs[i]] = currRes.value.totalSize;
         }
     }
 
